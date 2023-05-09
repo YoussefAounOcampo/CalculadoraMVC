@@ -1,24 +1,29 @@
 ﻿@model CalculadoraMVC.Models.Usuario
 
 @{
-    ViewData["Title"] = "Inicio de Sesión";
-}
+    ViewData["Title"] = "INICIO DE SESION";
 
-<div class="container my-5">
+}
+<div class="container my-5" style="padding-top: 5%;">
     <div class="row d-flex justify-content-center align-items-center">
         <div class="col-md-6 col-lg-4">
-            <h1 class="text-center mb-4 display-4">@ViewData["Title"]</h1>
+            <h1 class="text-center mb-4 display-4" style="padding-top: 0.5em;">@ViewData["Title"]</h1>
+            <hr />
+
             <form asp-action="Login" asp-controller="Login" method="post">
                 <div class="form-group">
                     <label for="Email">Correo electrónico</label>
                     <input type="email" class="form-control" id="Email" name="Email" placeholder="Ingrese su correo electrónico" required>
                 </div>
+                <hr />
                 <div class="form-group">
                     <label for="Password">Contraseña</label>
                     <input type="password" class="form-control" id="Password" name="Password" placeholder="Ingrese su contraseña" required>
                 </div>
-                <button type="submit" class="btn btn-primary btn-block"><i class="bi bi-box-arrow-in-right"></i> Ingresar</button>
 
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary btn-block form-control" style="background-color: #000000; color: #ffffff; border-color: #000000;"><i class="bi bi-box-arrow-in-right"></i> Ingresar</button>
+                </div>
             </form>
             <div asp-validation-summary="All" class="text-danger"></div>
 
