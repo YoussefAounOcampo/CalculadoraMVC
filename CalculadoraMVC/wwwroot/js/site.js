@@ -153,31 +153,94 @@ CalculadoraCientifica.prototype.constructor = CalculadoraCientifica;
 
 
 /**
-Escribe datos en la pantalla y actualiza la cadena de operaciones.
-@param {string} data - Datos a escribir en la pantalla.
-*/
+ * Escribe datos en la pantalla y actualiza la cadena de operaciones.
+ * @param {string} data - Datos a escribir en la pantalla.
+ */
 CalculadoraCientifica.prototype.writeToDisplay = function (data) {
-    if (document.getElementById("displayBox").value == "Syntax Error") {
+    var displayBox = document.getElementById("displayBox");
+
+    if (displayBox.value == "Syntax Error") {
         CalculadoraBasica.prototype.clearDisplay.call(this);
     }
+
     CalculadoraBasica.prototype.writeToDisplay.call(this, data);
     this.operationString += data;
     this.inputList.push(data);
+
+    if (!this.isOperator(data) && !this.hasUnclosedParentheses() && !this.hasConsecutiveOperators()) {
+        displayBox.classList.remove("red");
+    } else {
+        displayBox.classList.add("red");
+    }
 }
 
 
 /**
-
-Escribe un operador en la pantalla y actualiza la cadena de operaciones.
-@param {string} operator - Operador a escribir en la pantalla.
-*/
+ * Escribe un operador en la pantalla y actualiza la cadena de operaciones.
+ * @param {string} operator - Operador a escribir en la pantalla.
+ */
 CalculadoraCientifica.prototype.writeOperatorToDisplay = function (operator) {
     if (document.getElementById("displayBox").value == "Syntax Error") {
         CalculadoraBasica.prototype.clearDisplay.call(this);
     }
+
     this.operationString += operator;
     CalculadoraBasica.prototype.writeToDisplay.call(this, operator);
     this.inputList.push(operator);
+
+    var displayBox = document.getElementById("displayBox");
+    if (this.isOperator(operator) || this.hasUnclosedParentheses() || this.hasConsecutiveOperators()) {
+        displayBox.classList.add("red");
+    } else {
+        displayBox.classList.remove("red");
+    }
+}
+
+/**
+ * Verifica si un carácter es un operador.
+ * @param {string} character - Carácter a verificar.
+ * @returns {boolean} - true si es un operador, false de lo contrario.
+ */
+CalculadoraCientifica.prototype.isOperator = function (character) {
+    var operators = ["+", "-", "*", "/"]; // Agrega aquí otros operadores si es necesario
+    return operators.includes(character);
+}
+
+/**
+ * Verifica si hay paréntesis sin cerrar en la cadena de operaciones.
+ * @returns {boolean} - true si hay paréntesis sin cerrar, false de lo contrario.
+ */
+CalculadoraCientifica.prototype.hasUnclosedParentheses = function () {
+    var openParentheses = 0;
+    var closedParentheses = 0;
+
+    for (var i = 0; i < this.operationString.length; i++) {
+        if (this.operationString[i] === "(") {
+            openParentheses++;
+        } else if (this.operationString[i] === ")") {
+            closedParentheses++;
+        }
+    }
+
+    return openParentheses > closedParentheses;
+}
+
+/**
+ * Verifica si hay operadores consecutivos en la cadena de operaciones.
+ * @returns {boolean} - true si hay operadores consecutivos, false de lo contrario.
+ */
+CalculadoraCientifica.prototype.hasConsecutiveOperators = function () {
+    var operators = ["+", "-", "*", "/"];
+    var consecutiveOperators = false;
+
+    for (var i = 0; i < this.operationString.length - 1; i++) {
+        if (operators.includes(this.operationString[i]) && operators.includes(this.operationString[i + 1])) {
+            consecutiveOperators = true;
+            break;
+        }
+    }
+
+    return consecutiveOperators;
 }
 
 

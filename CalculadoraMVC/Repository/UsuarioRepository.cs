@@ -18,11 +18,6 @@ namespace CalculadoraMVC.Repository
             return await _context.Usuarios.FindAsync(id);
         }
 
-        public async Task<Usuario> GetUsuarioByEmail(string email)
-        {
-            return await _context.Usuarios.FirstOrDefaultAsync(u => u.Email == email);
-        }
-
         public async Task CreateUsuario(Usuario usuario)
         {
             _context.Usuarios.Add(usuario);

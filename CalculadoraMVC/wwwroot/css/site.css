@@ -7,12 +7,27 @@
     calculadora: #5a5a5a;
 */
 
+#displayBox {
+    font-size:35px;
+    color: #646562; /* Color por defecto */
+}
+
+    #displayBox.red {
+        color: red; /* Color rojo */
+    }
+
+
 @font-face {
     font-family: 'Ka1';
     src: url('/fonts/ka1.ttf') format('truetype');
     /* Aquí debes definir la ruta correcta del archivo de fuente en tu servidor */
 }
 
+@font-face {
+    font-family: 'digital';
+    src: url('/fonts/digital-7.ttf') format('truetype');
+    /* Aquí debes definir la ruta correcta del archivo de fuente en tu servidor */
+}
 
 table {
     display: inline-block;
@@ -41,7 +56,9 @@ html {
     color: #646562;
     background-color: #b4d0cd;
     margin-top: 20px;
+    font-family: "digital", monospace;
 }
+
 
 .container {
     background: white !important;
