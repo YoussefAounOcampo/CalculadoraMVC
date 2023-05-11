@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CalculadoraMVC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230509105817_Inicio")]
-    partial class Inicio
+    [Migration("20230511102513_INICIO")]
+    partial class INICIO
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -58,6 +58,7 @@ namespace CalculadoraMVC.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
+                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");

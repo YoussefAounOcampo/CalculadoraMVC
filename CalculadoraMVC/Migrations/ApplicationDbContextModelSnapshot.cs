@@ -56,6 +56,7 @@ namespace CalculadoraMVC.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
+                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");

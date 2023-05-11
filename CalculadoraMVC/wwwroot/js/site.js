@@ -269,6 +269,7 @@ CalculadoraCientifica.prototype.solveOperation = function () {
             }
         });
     } catch (err) {
+        displayBox.classList.add("red");
         result = "Syntax Error";
         $.ajax({
             type: 'POST',
