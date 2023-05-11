@@ -23,12 +23,11 @@ public class CalculadoraController : Controller
         _operacionRepository = operacionRepository;
     }
 
-    public IActionResult Index(int id)
+
+    public IActionResult Index()
     {
-        CurrentUser.Id= id;
         return View();
     }
-
 
     public async Task<IActionResult> Privacy()
     {

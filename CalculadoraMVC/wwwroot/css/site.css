@@ -6,7 +6,9 @@
     DISPLAY: #b4d0cd
     calculadora: #5a5a5a;
 */
-
+.custom-table {
+    width: auto !important;
+}
 #displayBox {
     font-size:35px;
     color: #646562; /* Color por defecto */
@@ -28,6 +30,7 @@
     src: url('/fonts/digital-7.ttf') format('truetype');
     /* Aquí debes definir la ruta correcta del archivo de fuente en tu servidor */
 }
+
 
 table {
     display: inline-block;

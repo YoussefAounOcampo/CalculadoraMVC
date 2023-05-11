@@ -29,7 +29,8 @@ public class LoginController : Controller
 
         if (usuario != null)
         {
-            return Redirect("/Calculadora/Index?id=" + usuario.Id);
+            CurrentUser.Id=usuario.Id;
+            return Redirect("/Calculadora/Index");
         }
         else
         {
