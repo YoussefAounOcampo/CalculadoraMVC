@@ -5,14 +5,15 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using CalculadoraMVC.Repository;
 
 public class LoginController : Controller
 {
-    private readonly ApplicationDbContext _context;
+    private readonly ILoginRepository _loginRepository;
 
-    public LoginController(ApplicationDbContext context)
+    public LoginController(ILoginRepository loginRepository)
     {
-        _context = context;
+        _loginRepository = loginRepository;
     }
 
     [HttpGet]
@@ -24,7 +25,7 @@ public class LoginController : Controller
     [HttpPost]
     public async Task<IActionResult> Login(Usuario model)
     {
-        var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Email == model.Email && u.Password == model.Password);
+        var usuario = await _loginRepository.GetUsuarioByEmailAndPasswordAsync(model.Email, model.Password);
 
         if (usuario != null)
         {
@@ -36,6 +37,7 @@ public class LoginController : Controller
             return View("Index", model);
         }
     }
+
 
     public IActionResult Logout()
     {

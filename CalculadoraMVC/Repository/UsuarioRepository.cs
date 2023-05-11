@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CalculadoraMVC.Repository
 {
-    public class UsuarioRepository : IUsuarioRepository
+    public class UsuarioRepository : IUsuarioRepository, ILoginRepository
     {
         private readonly ApplicationDbContext _context;
 
@@ -35,6 +35,21 @@ namespace CalculadoraMVC.Repository
             var usuario = await _context.Usuarios.FindAsync(id);
             _context.Usuarios.Remove(usuario);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<Usuario> GetUsuarioByEmailAndPasswordAsync(string email, string password)
+        {
+            return await _context.Usuarios.FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
+        }
+
+        public async Task<Usuario> GetUsuarioByEmailAndPassword(string email, string password)
+        {
+            return await _context.Usuarios.FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
+        }
+
+        public async Task<bool> IsEmailTaken(string email)
+        {
+            return await _context.Usuarios.AnyAsync(u => u.Email == email);
         }
     }
 }

@@ -14,14 +14,13 @@ public static class CurrentUser
 
 public class CalculadoraController : Controller
 {
-    private readonly ApplicationDbContext _context;
     private readonly IUsuarioRepository _usuarioRepository;
+    private readonly IOperacionRepository _operacionRepository;
 
-
-    public CalculadoraController(ApplicationDbContext context ,IUsuarioRepository usuarioRepository)
+    public CalculadoraController(IUsuarioRepository usuarioRepository, IOperacionRepository operacionRepository)
     {
-        _context = context;
         _usuarioRepository = usuarioRepository;
+        _operacionRepository = operacionRepository;
     }
 
     public IActionResult Index(int id)
@@ -31,7 +30,7 @@ public class CalculadoraController : Controller
     }
 
 
-    public IActionResult Privacy()
+    public async Task<IActionResult> Privacy()
     {
         var id = CurrentUser.Id;
 
@@ -40,7 +39,7 @@ public class CalculadoraController : Controller
             return NotFound();
         }
 
-        var operaciones = _context.Operaciones.Where(b => b.IdUsuario == id).ToList();
+        var operaciones = await _operacionRepository.GetOperacionesByUsuarioId(id.Value);
 
         return View(operaciones);
     }
@@ -65,8 +64,7 @@ public class CalculadoraController : Controller
 
         try
         {
-            _context.Operaciones.Add(operacion);
-            await _context.SaveChangesAsync();
+            await _operacionRepository.CreateOperacion(operacion);
             return Ok("Operación registrada en la base de datos.");
         }
         catch (Exception ex)
@@ -77,21 +75,15 @@ public class CalculadoraController : Controller
         }
     }
 
+
     [HttpPost]
     public async Task<IActionResult> Delete(int id)
     {
-        var operacion = await _context.Operaciones.FindAsync(id);
-
-        if (operacion == null)
-        {
-            return NotFound();
-        }
-
-        _context.Operaciones.Remove(operacion);
-        await _context.SaveChangesAsync();
+        await _operacionRepository.DeleteOperacion(id);
 
         return RedirectToAction(nameof(Privacy));
     }
+
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()

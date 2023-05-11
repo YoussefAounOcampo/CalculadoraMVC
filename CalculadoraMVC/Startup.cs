@@ -19,7 +19,9 @@ namespace CalculadoraMVC
         {
             services.AddDbContext<ApplicationDbContext>(options =>
              options.UseSqlite(_Configuration.GetConnectionString("DefaultConnection")));
+            services.AddScoped<ILoginRepository, UsuarioRepository>();
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+            services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<IOperacionRepository, OperacionRepository>();
             services.AddControllersWithViews();
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)

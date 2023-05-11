@@ -4,16 +4,13 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using CalculadoraMVC.Repository;
-
 public class AccountController : Controller
 {
-    private readonly ApplicationDbContext _context;
-    private readonly IUsuarioRepository _usuarioRepository;
+    private readonly IAccountRepository _accountRepository;
 
-    public AccountController(ApplicationDbContext context, IUsuarioRepository usuarioRepository)
+    public AccountController(IAccountRepository accountRepository)
     {
-        _context = context;
-        _usuarioRepository = usuarioRepository;
+        _accountRepository = accountRepository;
     }
 
     public async Task<IActionResult> Cuenta()
@@ -25,7 +22,7 @@ public class AccountController : Controller
             return NotFound();
         }
 
-        var usuario = await _usuarioRepository.GetUsuarioById(id.Value);
+        var usuario = await _accountRepository.GetUsuarioById(id.Value);
 
         if (usuario == null)
         {
@@ -44,7 +41,7 @@ public class AccountController : Controller
             return NotFound();
         }
 
-        var usuario = await _usuarioRepository.GetUsuarioById(id.Value);
+        var usuario = await _accountRepository.GetUsuarioById(id.Value);
 
         if (usuario == null)
         {
@@ -64,7 +61,7 @@ public class AccountController : Controller
             return NotFound();
         }
 
-        var usuario = await _usuarioRepository.GetUsuarioById(id.Value);
+        var usuario = await _accountRepository.GetUsuarioById(id.Value);
 
         if (usuario == null)
         {
@@ -74,7 +71,7 @@ public class AccountController : Controller
         usuario.Email = model.Email;
         usuario.Password = model.Password;
 
-        await _usuarioRepository.UpdateUsuario(usuario);
+        await _accountRepository.UpdateUsuario(usuario);
 
         return RedirectToAction(nameof(Cuenta));
     }
@@ -89,14 +86,14 @@ public class AccountController : Controller
             return NotFound();
         }
 
-        var usuario = await _usuarioRepository.GetUsuarioById(id.Value);
+        var usuario = await _accountRepository.GetUsuarioById(id.Value);
 
         if (usuario == null)
         {
             return NotFound();
         }
 
-        await _usuarioRepository.DeleteUsuario(usuario.Id);
+        await _accountRepository.DeleteUsuario(usuario.Id);
 
         CurrentUser.Id = null;
 

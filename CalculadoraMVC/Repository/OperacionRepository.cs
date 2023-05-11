@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using CalculadoraMVC.Data;
 using CalculadoraMVC.Models;
 using Microsoft.EntityFrameworkCore;
@@ -14,28 +15,28 @@ public class OperacionRepository : IOperacionRepository
         _context = context;
     }
 
-    public Operacion GetOperacionById(int id)
+    public async Task<Operacion> GetOperacionById(int id)
     {
-        return _context.Operaciones.FirstOrDefault(o => o.Id == id);
+        return await _context.Operaciones.FirstOrDefaultAsync(o => o.Id == id);
     }
 
-    public IEnumerable<Operacion> GetOperacionesByUsuarioId(int usuarioId)
+    public async Task<IEnumerable<Operacion>> GetOperacionesByUsuarioId(int usuarioId)
     {
-        return _context.Operaciones.Where(o => o.IdUsuario == usuarioId).ToList();
+        return await _context.Operaciones.Where(o => o.IdUsuario == usuarioId).ToListAsync();
     }
 
-    public void CreateOperacion(Operacion operacion)
+    public async Task CreateOperacion(Operacion operacion)
     {
         if (operacion == null)
         {
             throw new ArgumentNullException(nameof(operacion));
         }
 
-        _context.Operaciones.Add(operacion);
-        _context.SaveChanges();
+        await _context.Operaciones.AddAsync(operacion);
+        await _context.SaveChangesAsync();
     }
 
-    public void UpdateOperacion(Operacion operacion)
+    public async Task UpdateOperacion(Operacion operacion)
     {
         if (operacion == null)
         {
@@ -43,17 +44,17 @@ public class OperacionRepository : IOperacionRepository
         }
 
         _context.Entry(operacion).State = EntityState.Modified;
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
     }
 
-    public void DeleteOperacion(int id)
+    public async Task DeleteOperacion(int id)
     {
-        var operacion = _context.Operaciones.Find(id);
+        var operacion = await _context.Operaciones.FindAsync(id);
 
         if (operacion != null)
         {
             _context.Operaciones.Remove(operacion);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }
