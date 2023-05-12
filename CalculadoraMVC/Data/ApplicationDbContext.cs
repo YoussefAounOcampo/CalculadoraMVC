@@ -11,7 +11,7 @@ namespace CalculadoraMVC.Data
         }
 
         public DbSet<Operacion> Operaciones { get; set; }
-        public DbSet<Usuario> Usuarios { get; set; } // Nueva propiedad
+        public DbSet<Usuario> Usuarios { get; set; }
 
     }
 }

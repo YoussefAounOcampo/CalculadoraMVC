@@ -383,40 +383,46 @@ CalculadoraCientifica.prototype.writeMathFunction = function (data) {
 
 
 /**
-
-Calcula el factorial de un número y muestra el resultado en la pantalla.
-*/
+ * Calcula el factorial de un número y muestra el resultado en la pantalla.
+ */
 CalculadoraCientifica.prototype.calculateFactorial = function () {
     var number = parseInt(this.operationString.split(new RegExp("[^0-9]")));
     var result = 0;
     try {
         result = this.calculateRecursiveFactorial(number);
+
+        // Hacer la llamada AJAX
+        this.registerOperation(`Factorial(${number})`, result);
     } catch (err) {
         document.getElementById("displayBox").value = "Numero demasiado grande";
+        return;
     }
     this.clearDisplay();
     document.getElementById("displayBox").value = result;
-}
-
+};
 
 CalculadoraCientifica.prototype.calculateRecursiveFactorial = function (number) {
     if (number == 1 || number == 0) {
         return 1;
     }
     return number * this.calculateRecursiveFactorial(number - 1);
-}
+};
 
 
 /**
-
-Calcula la potencia de diez de un número y muestra el resultado en la pantalla.
-*/
+ * Calcula la potencia de diez de un número y muestra el resultado en la pantalla.
+ */
 CalculadoraCientifica.prototype.nthTenPower = function () {
     var number = parseInt(this.operationString.split(new RegExp("[^0-9]")));
     var result = Math.pow(10, parseInt(number));
+
+    // Hacer la llamada AJAX
+    this.registerOperation(`Math.pow(10, ${number})`, result);
+
     this.clearDisplay();
     this.writeToDisplay(result);
-}
+};
+
 
 
 /**
@@ -426,6 +432,7 @@ Calcula cuadrado de un número y muestra el resultado en la pantalla.
 CalculadoraCientifica.prototype.square = function () {
     var number = parseFloat(this.operationString);
     var result = Math.pow(number, 2);
+    this.registerOperation(`Math.pow(${number}, 2)`, result);
     this.clearDisplay();
     this.writeToDisplay(result);
     this.operationString = result.toString();
@@ -433,26 +440,48 @@ CalculadoraCientifica.prototype.square = function () {
 
 
 /**
- * Calcula cubo de un número y muestra el resultado en la pantalla.
+ * Calcula el cubo de un número y muestra el resultado en la pantalla.
  */
 CalculadoraCientifica.prototype.cube = function () {
     var number = parseFloat(this.operationString);
     var result = Math.pow(number, 3);
+
+    // Hacer la llamada AJAX
+    this.registerOperation(`Math.pow(${number}, 3)`, result);
+
     this.clearDisplay();
     this.writeToDisplay(result);
     this.operationString = result.toString();
-}
-
+};
 
 /**
- * Calcula el inverse de un número y muestra el resultado en la pant
+ * Calcula el inverso de un número y muestra el resultado en la pantalla.
  */
 CalculadoraCientifica.prototype.inverseNumber = function () {
     var number = parseInt(this.operationString.split(new RegExp("[^0-9]")));
     var result = Math.pow(parseInt(number), -1);
+
+    // Hacer la llamada AJAX
+    this.registerOperation(`Math.pow(${number}, -1)`, result);
+
     this.clearDisplay();
     this.writeToDisplay(result);
-}
+};
+
 
 
 const calculadora = new CalculadoraCientifica();  
+
+CalculadoraCientifica.prototype.registerOperation = function (operationString, result) {
+    $.ajax({
+        type: 'POST',
+        url: '/Calculadora/RegisterOperation',
+        data: { OperationString: operationString, Resultado: result },
+        success: function (data) {
+            console.log('Operación registrada en la base de datos.');
+        },
+        error: function (xhr, status, error) {
+            console.log('Error al registrar la operación en la base de datos.');
+        }
+    });
+};
