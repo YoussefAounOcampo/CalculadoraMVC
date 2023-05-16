@@ -6,10 +6,8 @@ namespace CalculadoraMVC.Models
     {
         [Key]
         public int Id { get; set; }
-
         [Required(ErrorMessage = "El campo Email es requerido.")]
         public string Email { get; set; }
-
         [Required(ErrorMessage = "El campo Contraseña es requerido.")]
         [StringLength(100, MinimumLength = 8, ErrorMessage = "La contraseña debe tener al menos 8 caracteres.")]
         [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$",

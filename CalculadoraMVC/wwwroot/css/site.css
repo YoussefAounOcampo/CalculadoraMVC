@@ -22,13 +22,11 @@
 @font-face {
     font-family: 'Ka1';
     src: url('/fonts/ka1.ttf') format('truetype');
-    /* Aquí debes definir la ruta correcta del archivo de fuente en tu servidor */
 }
 
 @font-face {
     font-family: 'digital';
     src: url('/fonts/digital-7.ttf') format('truetype');
-    /* Aquí debes definir la ruta correcta del archivo de fuente en tu servidor */
 }
 
 
@@ -67,9 +65,7 @@ html {
     background: white !important;
     width: 100%;
     min-height: 77%;
-    /* Agrega una sombra más pronunciada con un radio de desenfoque de 20px y un nivel de opacidad de 0.5 */
     border-radius: 10px;
-    /* Agrega un borde redondeado al contenedor */
 }
 
 
@@ -267,7 +263,7 @@ h1 {
 }
 
 #tablaResultados {
-    max-height:360px; /* Ajusta la altura máxima según tus necesidades */
+    max-height:360px;
     overflow-y: auto;
 }
 

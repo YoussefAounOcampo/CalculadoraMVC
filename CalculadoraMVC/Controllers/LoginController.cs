@@ -39,7 +39,6 @@ public class LoginController : Controller
         }
     }
 
-
     public IActionResult Logout()
     {
         CurrentUser.Id = 0;

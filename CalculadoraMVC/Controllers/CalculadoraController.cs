@@ -23,7 +23,6 @@ public class CalculadoraController : Controller
         _operacionRepository = operacionRepository;
     }
 
-
     public IActionResult Index()
     {
         return View();
@@ -73,7 +72,6 @@ public class CalculadoraController : Controller
             return BadRequest($"Error al registrar la operación en la base de datos: {ex.Message}");
         }
     }
-
 
     [HttpPost]
     public async Task<IActionResult> Delete(int id)

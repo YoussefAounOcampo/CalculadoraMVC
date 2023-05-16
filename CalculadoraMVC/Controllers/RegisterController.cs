@@ -28,7 +28,7 @@ namespace CalculadoraMVC.Controllers
                 ModelState.AddModelError(string.Empty, "Ya existe un usuario registrado con ese correo electrónico.");
                 return View(model);
             }
-            
+
             if (ModelState.IsValid)
             {
                 _context.Usuarios.Add(model);
@@ -38,7 +38,5 @@ namespace CalculadoraMVC.Controllers
 
             return View(model);
         }
-
-
     }
 }
